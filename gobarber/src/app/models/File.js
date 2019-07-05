@@ -1,5 +1,4 @@
 import Sequelize, { Model } from 'sequelize';
-import bcrypt from 'bcryptjs';
 
 class File extends Model {
     static init(sequelize) {
@@ -7,6 +6,13 @@ class File extends Model {
             {
                 name: Sequelize.STRING,
                 path: Sequelize.STRING,
+                // Campo virtualnão existe na tabela, só para o desenvolvedor
+                url: {
+                    type: Sequelize.VIRTUAL,
+                    get() {
+                        return `http://localhost:3333/files/${this.path}`;
+                    },
+                },
             },
             {
                 sequelize,
